@@ -37,6 +37,7 @@ frontend/dist/
 frontend/.vite/
 .npm
 *.tsbuildinfo
+package-lock.json
 
 # ── IDE & OS ─────────────────────────────────────
 .vscode/
