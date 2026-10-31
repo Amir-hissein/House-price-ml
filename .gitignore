@@ -1,0 +1,76 @@
+# ── Python ──────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ── Virtual environments ─────────────────────────
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# ── Node / Frontend ──────────────────────────────
+node_modules/
+frontend/dist/
+frontend/.vite/
+.npm
+*.tsbuildinfo
+
+# ── IDE & OS ─────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Testing & Coverage ───────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+
+# ── Jupyter Notebooks ────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Logs & temp ──────────────────────────────────
+*.log
+*.tmp
+*.bak
+
+# ── Environment secrets ──────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Large binary / generated files ───────────────
+# Keep the trained model but ignore raw data if large
+# data/raw/*.csv   # Uncomment to exclude raw CSV from repo
+reports/figures/*.html

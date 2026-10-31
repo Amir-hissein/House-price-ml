@@ -1,0 +1,216 @@
+/* Style inspiré du design épuré, clair et professionnel de Streamlit */
+:root {
+  --bg-app: #ffffff;
+  --bg-secondary: #f0f2f6;
+  --bg-card: #ffffff;
+  --border-color: #e6e9ef;
+  --border-focus: #ff4b4b;
+
+  --text-title: #262730;
+  --text-body: #31333f;
+  --text-muted: #6b7280;
+  --text-caption: #808495;
+
+  --primary-color: #ff4b4b;
+  --primary-hover: #ff3333;
+  --primary-light: #ffecec;
+
+  --success-color: #09ab3b;
+  --success-bg: #eaf8ee;
+  --info-bg: #eef2ff;
+  --info-border: #c7d2fe;
+  --info-text: #3730a3;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Onglets style Streamlit */
+.st-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-color);
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.st-tab {
+  background: transparent;
+  border: none;
+  padding: 10px 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s ease;
+}
+
+.st-tab:hover {
+  color: var(--text-title);
+}
+
+.st-tab.active {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.st-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.st-tab-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Bouton principal Streamlit */
+.st-button-primary {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.st-button-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+/* Carte métrique Streamlit */
+.st-metric-card {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.st-metric-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.st-metric-value {
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--text-title);
+  line-height: 1.2;
+}
+
+.st-metric-delta {
+  font-size: 0.82rem;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+.st-metric-delta.positive {
+  color: var(--success-color);
+}
+
+/* Contrôles de formulaire simples */
+.st-form-group {
+  margin-bottom: 18px;
+}
+
+.st-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-body);
+  margin-bottom: 6px;
+}
+
+.st-input {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 0.92rem;
+  color: var(--text-title);
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.st-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.st-slider-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.st-slider {
+  flex: 1;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.st-slider-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-title);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* Encadré d'information */
+.st-info-box {
+  background-color: var(--info-bg);
+  border-left: 4px solid var(--primary-color);
+  padding: 12px 16px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.88rem;
+  color: var(--text-body);
+  margin-bottom: 20px;
+}
+
+/* Carte de graphique simple */
+.st-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 20px;
+}
