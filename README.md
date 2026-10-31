@@ -6,7 +6,20 @@ A complete end-to-end machine learning project that predicts residential house p
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3%2B-F7931E?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
+[![Multi--Language](https://img.shields.io/badge/i18n-FR%20%7C%20EN%20%7C%20TR-blue)](https://github.com/Amir-hissein/House-price-ml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+---
+
+## 🖼️ Application Showcase
+
+| 🔮 **Price Predictor** | 📊 **Interactive Data Charts** |
+| :---: | :---: |
+| <img src="docs/screenshots/01_predict_price.png" alt="Price Predictor" width="100%"/> | <img src="docs/screenshots/02_data_charts.jpg" alt="Data Charts" width="100%"/> |
+| *Real-time inference & market percentile* | *Plotly distributions & correlation heatmap* |
+| 📈 **Model Performance & Interpretability** | 🗂️ **Raw Data Explorer (1,460 Homes)** |
+| <img src="docs/screenshots/03_model_performance.jpg" alt="Model Performance" width="100%"/> | <img src="docs/screenshots/04_data_table.png" alt="Data Table" width="100%"/> |
+| *R², actual vs predicted scatter plot & equation* | *Sortable table with sticky header & filters* |
 
 ---
 
@@ -14,23 +27,25 @@ A complete end-to-end machine learning project that predicts residential house p
 
 This project covers the full ML lifecycle — from raw data ingestion to an interactive web interface — using the **Ames Housing dataset** (1,460 houses). It is designed to be clean, testable, and easy to run locally.
 
-| Metric | Value |
-|---|---|
-| R² Score | **0.7992** |
-| Median Accuracy | **88.4%** |
-| MAE | **\$25,291** |
-| RMSE | **\$39,241** |
-| MAPE | **15.5%** |
+| Metric | Value | Interpretation |
+|---|---|---|
+| **R² Score** | **0.7992** | Explains ~80% of price variance with 6 key features |
+| **Median Accuracy** | **88.4%** | Half of predictions are within ±11.6% of real price |
+| **MAE** | **\$25,291** | Mean absolute dollar error across the test set |
+| **RMSE** | **\$39,241** | Root mean squared error penalizing large deviations |
+| **MAPE** | **15.5%** | Average relative percentage error |
 
 ---
 
-## Features
+## Key Features
 
-- **Linear Regression** trained on 6 key features (living area, quality, garage, basement, bathrooms, bedrooms)
-- **FastAPI backend** — REST endpoints for predictions, metrics, charts, and raw data
-- **React + Vite frontend** — professional dashboard with interactive Plotly charts
-- **Automated test suite** — 23 pytest tests covering data loading, preprocessing, training, and API
-- **One-command launcher** via `run.sh`
+- **Linear Regression Pipeline** trained on 6 key drivers (`GrLivArea`, `OverallQual`, `GarageCars`, `TotalBsmtSF`, `FullBath`, `BedroomAbvGr`)
+- **FastAPI Backend** — High-performance REST API (`/predict`, `/metrics`, `/data`, `/plotly/*`)
+- **Modern React 18 Dashboard** — Streamlit-inspired minimalist design with full responsive support
+- **🌐 100% Multi-Language (i18n)** — One-click floating language picker supporting **Français 🇫🇷**, **English 🇬🇧**, and **Türkçe 🇹🇷** (including chart axes and annotations)
+- **Interactive Plotly Visualizations** — Zoom, hover tooltips, distributions, box plots, and heatmaps
+- **Automated Test Suite** — 26 pytest tests covering API endpoints, data loading, preprocessing, model training, and visualization
+- **One-Command CLI Runner** — `run.sh` script to launch, train, test, and audit with zero hassle
 
 ---
 
@@ -59,7 +74,7 @@ house-price-ml/
 ├── reports/
 │   ├── metrics.json
 │   └── figures/
-├── tests/                    # 23 automated pytest tests
+├── tests/                    # 26 automated pytest tests
 ├── run.sh                    # Universal launcher script
 ├── requirements.txt
 └── README.md
@@ -119,7 +134,7 @@ Open **http://localhost:8000** in your browser.
 ```bash
 ./run.sh app          # Start the FastAPI server + React frontend (port 8000)
 ./run.sh train        # Retrain the model and regenerate charts
-./run.sh test         # Run the full pytest test suite (23 tests)
+./run.sh test         # Run the full pytest test suite (26 tests)
 ./run.sh predict      # Run a sample prediction from the command line
 ./run.sh visualize    # Export interactive HTML charts to reports/figures/
 ./run.sh audit        # Run the model & chart audit control script
