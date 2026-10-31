@@ -135,8 +135,8 @@ def get_data_summary():
     }
 
 @app.get("/api/data/sample")
-def get_data_sample(limit: int = 50, neighborhood: Optional[str] = None):
-    """Retourne un échantillon paginé de maisons réelles pour exploration."""
+def get_data_sample(limit: int = 1460, neighborhood: Optional[str] = None):
+    """Retourne les maisons réelles pour exploration (toutes par défaut)."""
     if df_data.empty:
         return []
 

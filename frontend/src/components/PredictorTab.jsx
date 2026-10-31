@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { predictPrice } from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function PredictorTab() {
+  const { t } = useLanguage();
   const [area, setArea] = useState(1500);
   const [quality, setQuality] = useState(6);
   const [garage, setGarage] = useState(2);
@@ -34,12 +36,12 @@ export default function PredictorTab() {
 
   return (
     <div>
-      {/* 2 Colonnes identiques à Streamlit */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', marginBottom: '24px' }}>
+      {/* 2 colonnes → 1 colonne sur mobile */}
+      <div className="predictor-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '24px' }}>
         {/* Colonne 1 */}
         <div>
           <div className="st-form-group">
-            <label className="st-label">Surface habitable (sq ft)</label>
+            <label className="st-label">{t('livingArea')}</label>
             <input
               type="number"
               className="st-input"
@@ -51,7 +53,7 @@ export default function PredictorTab() {
           </div>
 
           <div className="st-form-group">
-            <label className="st-label">Qualité générale (1 à 10)</label>
+            <label className="st-label">{t('overallQuality')}</label>
             <div className="st-slider-container">
               <input
                 type="range"
@@ -66,7 +68,7 @@ export default function PredictorTab() {
           </div>
 
           <div className="st-form-group">
-            <label className="st-label">Capacité du garage (véhicules)</label>
+            <label className="st-label">{t('garageCapacity')}</label>
             <input
               type="number"
               className="st-input"
@@ -81,7 +83,7 @@ export default function PredictorTab() {
         {/* Colonne 2 */}
         <div>
           <div className="st-form-group">
-            <label className="st-label">Surface du sous-sol (sq ft)</label>
+            <label className="st-label">{t('basementArea')}</label>
             <input
               type="number"
               className="st-input"
@@ -93,7 +95,7 @@ export default function PredictorTab() {
           </div>
 
           <div className="st-form-group">
-            <label className="st-label">Salles de bain complètes</label>
+            <label className="st-label">{t('fullBathrooms')}</label>
             <input
               type="number"
               className="st-input"
@@ -105,7 +107,7 @@ export default function PredictorTab() {
           </div>
 
           <div className="st-form-group">
-            <label className="st-label">Chambres</label>
+            <label className="st-label">{t('bedrooms')}</label>
             <input
               type="number"
               className="st-input"
@@ -118,38 +120,38 @@ export default function PredictorTab() {
         </div>
       </div>
 
-      {/* Bouton d'action Streamlit */}
+      {/* Bouton d'action */}
       <div style={{ marginBottom: '24px' }}>
         <button
           onClick={handlePredict}
           className="st-button-primary"
           disabled={loading}
         >
-          {loading ? 'Calcul en cours...' : 'Prédire le prix'}
+          {loading ? t('calculating') : t('predictBtn')}
         </button>
       </div>
 
-      {/* Résultat sous forme de carte métrique Streamlit */}
+      {/* Résultat sous forme de carte métrique */}
       {result && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '20px', marginBottom: '20px' }}>
+        <div className="result-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '20px' }}>
           <div className="st-metric-card">
-            <span className="st-metric-label">Prix estimé</span>
+            <span className="st-metric-label">{t('estimatedPrice')}</span>
             <span className="st-metric-value">{result.formatted_price}</span>
           </div>
 
           <div className="st-metric-card">
-            <span className="st-metric-label">Positionnement marché réel</span>
-            <span className="st-metric-value">{result.percentile}% des maisons</span>
+            <span className="st-metric-label">{t('marketPosition')}</span>
+            <span className="st-metric-value">{result.percentile}% {t('ofHouses')}</span>
             <span className="st-metric-delta positive">
-              {(result.diff_from_median >= 0 ? '+' : '')}${Math.round(result.diff_from_median).toLocaleString()} vs médiane ($163,000)
+              {(result.diff_from_median >= 0 ? '+' : '')}${Math.round(result.diff_from_median).toLocaleString()} {t('vsMedian')}
             </span>
           </div>
         </div>
       )}
 
-      {/* Légende Streamlit */}
+      {/* Légende */}
       <p style={{ fontSize: '0.85rem', color: 'var(--text-caption)' }}>
-        Estimation expérimentale, pas une expertise immobilière.
+        {t('disclaimer')}
       </p>
     </div>
   );

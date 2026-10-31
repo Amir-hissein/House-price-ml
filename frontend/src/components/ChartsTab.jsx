@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { fetchPlotlyFigure } from '../services/api';
 import PlotlyChart from './PlotlyChart';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ChartsTab() {
+  const { t } = useLanguage();
   const [distFig, setDistFig] = useState(null);
   const [areaFig, setAreaFig] = useState(null);
   const [neighFig, setNeighFig] = useState(null);
@@ -31,7 +33,7 @@ export default function ChartsTab() {
     <div>
       {loading ? (
         <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-          Chargement des graphiques Plotly...
+          {t('loadingCharts')}
         </div>
       ) : (
         /* Grille 2 en haut et 2 en bas comme dans Streamlit (c1, c2 / c3, c4) */
@@ -44,7 +46,7 @@ export default function ChartsTab() {
           {distFig && (
             <PlotlyChart
               figure={distFig}
-              title="Distribution des Prix de Vente (SalePrice)"
+              title={t('chartDistTitle')}
               minHeight="400px"
             />
           )}
@@ -53,7 +55,7 @@ export default function ChartsTab() {
           {areaFig && (
             <PlotlyChart
               figure={areaFig}
-              title="Surface Habitable (GrLivArea) vs Prix Réel de Vente"
+              title={t('chartAreaTitle')}
               minHeight="400px"
             />
           )}
@@ -62,7 +64,7 @@ export default function ChartsTab() {
           {neighFig && (
             <PlotlyChart
               figure={neighFig}
-              title="Dispersion Réelle des Prix par Quartier (Neighborhood)"
+              title={t('chartNeighTitle')}
               minHeight="400px"
             />
           )}
@@ -71,7 +73,7 @@ export default function ChartsTab() {
           {corrFig && (
             <PlotlyChart
               figure={corrFig}
-              title="Matrice de Corrélation des Variables Clés avec SalePrice"
+              title={t('chartCorrTitle')}
               minHeight="400px"
             />
           )}
