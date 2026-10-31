@@ -141,9 +141,9 @@ export default function PredictorTab() {
 
           <div className="st-metric-card">
             <span className="st-metric-label">{t('marketPosition')}</span>
-            <span className="st-metric-value">{result.percentile}% {t('ofHouses')}</span>
+            <span className="st-metric-value">{t('higherThan')} {result.percentile}% {t('ofHouses')}</span>
             <span className="st-metric-delta positive">
-              {(result.diff_from_median >= 0 ? '+' : '')}${Math.round(result.diff_from_median).toLocaleString()} {t('vsMedian')}
+              {(result.diff_from_median >= 0 ? '+' : '')}${Math.round(result.diff_from_median).toLocaleString()} {t('vsMedianLabel')}
             </span>
           </div>
         </div>

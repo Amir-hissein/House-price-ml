@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 const IconHouse = () => (
@@ -8,17 +8,44 @@ const IconHouse = () => (
   </svg>
 );
 
-const languages = [
-  { code: 'fr', label: 'FR', flag: '🇫🇷', name: 'Français' },
-  { code: 'en', label: 'EN', flag: '🇬🇧', name: 'English' },
-  { code: 'tr', label: 'TR', flag: '🇹🇷', name: 'Türkçe' },
-];
+const IconGlobe = () => (
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10"/>
+    <line x1="2" y1="12" x2="22" y2="12"/>
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+  </svg>
+);
 
 export default function Header() {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage, t, languages } = useLanguage();
+  const [isOpen, setIsOpen] = useState(false);
+  const popoverRef = useRef(null);
+
+  const currentLang = languages.find(l => l.code === language) || languages[0];
+
+  // Fermer la petite fenêtre si on clique en dehors ou appuie sur Escape
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (popoverRef.current && !popoverRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') setIsOpen(false);
+    }
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
 
   return (
-    <div className="app-header" style={{ marginBottom: '28px' }}>
+    <div className="app-header" style={{ marginBottom: '28px', position: 'relative' }}>
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -47,43 +74,145 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Bouton de sélection de langue (FR / EN / TR) */}
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          background: '#f0f2f6',
-          borderRadius: '20px',
-          padding: '3px',
-          border: '1px solid #e6e9ef'
-        }}>
-          {languages.map((l) => {
-            const active = language === l.code;
-            return (
-              <button
-                key={l.code}
-                onClick={() => setLanguage(l.code)}
-                title={l.name}
-                style={{
-                  background: active ? '#ffffff' : 'transparent',
-                  color: active ? '#ff4b4b' : '#6b7280',
-                  fontWeight: active ? 700 : 500,
-                  fontSize: '0.82rem',
-                  border: active ? '1px solid #d8dde6' : '1px solid transparent',
-                  borderRadius: '16px',
-                  padding: '5px 12px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                  transition: 'all 0.15s ease',
-                  boxShadow: active ? '0 1px 3px rgba(0,0,0,0.06)' : 'none',
-                }}
-              >
-                <span>{l.flag}</span>
-                <span>{l.label}</span>
-              </button>
-            );
-          })}
+        {/* Bouton ouvrant la "petite fenêtre" de changement de langue */}
+        <div style={{ position: 'relative' }} ref={popoverRef}>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 16px',
+              background: isOpen ? '#ffffff' : '#f0f2f6',
+              border: '1px solid',
+              borderColor: isOpen ? '#ff4b4b' : '#d8dde6',
+              borderRadius: '24px',
+              fontSize: '0.88rem',
+              fontWeight: 600,
+              color: '#262730',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease',
+              boxShadow: isOpen ? '0 2px 8px rgba(0,0,0,0.08)' : 'none',
+            }}
+          >
+            <span style={{ color: '#ff4b4b', display: 'flex' }}><IconGlobe /></span>
+            <span style={{ fontSize: '1rem' }}>{currentLang.flag}</span>
+            <span>{currentLang.label}</span>
+            <span style={{ fontSize: '0.72rem', color: '#6b7280', marginLeft: '2px' }}>
+              {isOpen ? '▲' : '▼'}
+            </span>
+          </button>
+
+          {/* ── La petite fenêtre (Modal / Popover flottante) ── */}
+          {isOpen && (
+            <div style={{
+              position: 'absolute',
+              right: 0,
+              top: 'calc(100% + 8px)',
+              width: '280px',
+              background: '#ffffff',
+              border: '1px solid #e6e9ef',
+              borderRadius: '12px',
+              boxShadow: '0 12px 30px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06)',
+              padding: '14px',
+              zIndex: 1000,
+              animation: 'fadeIn 0.15s ease-out'
+            }}>
+              {/* En-tête de la petite fenêtre */}
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                justifyContent: 'space-between',
+                paddingBottom: '10px',
+                marginBottom: '10px',
+                borderBottom: '1px solid #f0f2f6'
+              }}>
+                <div>
+                  <h4 style={{ margin: 0, fontSize: '0.9rem', fontWeight: 700, color: '#262730' }}>
+                    {t('languageModalTitle')}
+                  </h4>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.74rem', color: '#808495' }}>
+                    {t('languageModalSubtitle')}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    color: '#9ca3af',
+                    padding: '2px 6px',
+                    lineHeight: 1
+                  }}
+                  title="Fermer"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Liste des langues */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                {languages.map((l) => {
+                  const isSelected = language === l.code;
+                  return (
+                    <button
+                      key={l.code}
+                      onClick={() => {
+                        setLanguage(l.code);
+                        setIsOpen(false);
+                      }}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '10px 12px',
+                        background: isSelected ? '#f0f4ff' : 'transparent',
+                        border: isSelected ? '1px solid #c7d2fe' : '1px solid transparent',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isSelected) e.currentTarget.style.background = '#f8fafc';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isSelected) e.currentTarget.style.background = 'transparent';
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <span style={{ fontSize: '1.35rem', lineHeight: 1 }}>{l.flag}</span>
+                        <div>
+                          <div style={{
+                            fontSize: '0.88rem',
+                            fontWeight: isSelected ? 700 : 500,
+                            color: isSelected ? '#1e40af' : '#262730'
+                          }}>
+                            {l.label}
+                          </div>
+                          <div style={{ fontSize: '0.72rem', color: '#6b7280' }}>
+                            {l.sub}
+                          </div>
+                        </div>
+                      </div>
+
+                      {isSelected && (
+                        <span style={{
+                          color: '#2563eb',
+                          fontWeight: 700,
+                          fontSize: '1rem'
+                        }}>
+                          ✓
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

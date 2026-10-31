@@ -1,10 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const translations = {
   fr: {
     // Header
     appTitle: "House Price Predictor",
     appSubtitle: "Estime le prix d'une maison avec un modèle de Machine Learning et explore les données.",
+    languageModalTitle: "Choisir la langue",
+    languageModalSubtitle: "Sélectionnez votre langue d'affichage",
 
     // Tabs
     tabPredict: "Prédire le prix",
@@ -23,16 +25,32 @@ const translations = {
     calculating: "Calcul en cours...",
     estimatedPrice: "Prix estimé",
     marketPosition: "Positionnement marché réel",
-    ofHouses: "des maisons",
-    vsMedian: "vs médiane ($163,000)",
-    disclaimer: "Estimation expérimentale, pas une expertise immobilière.",
+    higherThan: "Supérieur à",
+    ofHouses: "des maisons du marché",
+    vsMedianLabel: "par rapport à la médiane (163 000 $)",
+    disclaimer: "Estimation expérimentale basée sur 1 460 données réelles, pas une expertise immobilière légale.",
 
-    // Charts
+    // Charts Tab
     loadingCharts: "Chargement des graphiques Plotly...",
     chartDistTitle: "Distribution des Prix de Vente (SalePrice)",
     chartAreaTitle: "Surface Habitable (GrLivArea) vs Prix Réel de Vente",
     chartNeighTitle: "Dispersion Réelle des Prix par Quartier (Neighborhood)",
     chartCorrTitle: "Matrice de Corrélation des Variables Clés avec SalePrice",
+
+    // Plotly Axis / Traces / Labels inside charts
+    plotSalePrice: "Prix de Vente ($)",
+    plotHouseCount: "Nombre de maisons",
+    plotLivingArea: "Surface Habitable (sq ft)",
+    plotQuality: "Qualité (1-10)",
+    plotBasement: "Sous-sol (sq ft)",
+    plotNeighborhood: "Quartier",
+    plotActualPrice: "Prix Réel ($)",
+    plotPredictedPrice: "Prix Estimé ($)",
+    plotError: "Erreur ($)",
+    plotAbsoluteError: "Erreur Absolue ($)",
+    plotMedianPrefix: "Médiane :",
+    plotMeanPrefix: "Moyenne :",
+    plotIdealLine: "Ligne parfaite y = x",
 
     // Model Performance
     modelPerfTitle: "Performances du modèle de régression linéaire",
@@ -59,13 +77,13 @@ const translations = {
     equationPrice: "Prix",
     interpretationTitle: "Interprétation métier",
     rule1Text: "+1 sq ft de surface habitable",
-    rule1Impact: "+$49 en moyenne",
+    rule1Impact: "+49 $ en moyenne",
     rule2Text: "+1 point de qualité générale",
-    rule2Impact: "+$22 434 en moyenne",
+    rule2Impact: "+22 434 $ en moyenne",
     rule3Text: "+1 place de garage",
-    rule3Impact: "+$18 529 en moyenne",
+    rule3Impact: "+18 529 $ en moyenne",
     rule4Text: "+1 chambre supplémentaire",
-    rule4Impact: "–$7 277 (corrélation négative)",
+    rule4Impact: "–7 277 $ (corrélation négative)",
     featGrLivArea: "Surface habitable (GrLivArea)",
     featOverallQual: "Qualité générale (OverallQual)",
     featTotalBsmtSF: "Surface sous-sol (TotalBsmtSF)",
@@ -76,24 +94,24 @@ const translations = {
     // Data Explorer
     dataTitle: "Données brutes — Ames Housing",
     dataSubtitle: "Jeu de données complet · 1 460 maisons · Cliquez sur une colonne pour trier",
-    filterNeighborhood: "Quartier",
-    allNeighborhoods: "Tous ({count} quartiers)",
+    filterNeighborhood: "Filtrer par quartier",
+    allNeighborhoods: "Tous les quartiers ({count})",
     quickSearch: "Recherche rapide",
-    searchPlaceholder: "Ex: CollgCr, Veenker…",
-    rowsDisplayed: "ligne(s) affichée(s)",
+    searchPlaceholder: "Ex: CollgCr, Veenker, Edwards…",
+    rowsDisplayed: "maison(s) affichée(s)",
     outOfTotal: "sur {total} au total",
     resetFilters: "Réinitialiser les filtres",
     loadingData: "Chargement des 1 460 maisons…",
-    noDataFound: "Aucune ligne ne correspond aux filtres.",
+    noDataFound: "Aucune maison ne correspond aux filtres sélectionnés.",
     colId: "#",
     colQuartier: "Quartier",
-    colPrice: "Prix ($)",
+    colPrice: "Prix Réel ($)",
     colArea: "Surface (sq ft)",
     colQuality: "Qualité",
     colGarage: "Garage",
     colBasement: "Sous-sol (sq ft)",
     colBath: "Salles de bain",
-    colYear: "Année",
+    colYear: "Année de construction",
     sortedBy: "Triées par",
     ascending: "croissant",
     descending: "décroissant",
@@ -103,6 +121,8 @@ const translations = {
     // Header
     appTitle: "House Price Predictor",
     appSubtitle: "Estimate house prices using Machine Learning and explore real dataset insights.",
+    languageModalTitle: "Choose Language",
+    languageModalSubtitle: "Select your preferred display language",
 
     // Tabs
     tabPredict: "Predict Price",
@@ -121,16 +141,32 @@ const translations = {
     calculating: "Calculating...",
     estimatedPrice: "Estimated Price",
     marketPosition: "Market Positioning",
-    ofHouses: "of houses",
-    vsMedian: "vs median ($163,000)",
-    disclaimer: "Experimental estimate, not a certified real estate appraisal.",
+    higherThan: "Higher than",
+    ofHouses: "of market homes",
+    vsMedianLabel: "compared to median ($163,000)",
+    disclaimer: "Experimental estimate based on 1,460 real properties, not a certified real estate appraisal.",
 
-    // Charts
+    // Charts Tab
     loadingCharts: "Loading Plotly charts...",
     chartDistTitle: "Sale Price Distribution (SalePrice)",
     chartAreaTitle: "Living Area (GrLivArea) vs Actual Sale Price",
     chartNeighTitle: "Actual Price Distribution by Neighborhood",
     chartCorrTitle: "Correlation Matrix of Key Features with SalePrice",
+
+    // Plotly Axis / Traces / Labels inside charts
+    plotSalePrice: "Sale Price ($)",
+    plotHouseCount: "Number of Houses",
+    plotLivingArea: "Living Area (sq ft)",
+    plotQuality: "Quality (1-10)",
+    plotBasement: "Basement (sq ft)",
+    plotNeighborhood: "Neighborhood",
+    plotActualPrice: "Actual Price ($)",
+    plotPredictedPrice: "Predicted Price ($)",
+    plotError: "Error ($)",
+    plotAbsoluteError: "Absolute Error ($)",
+    plotMedianPrefix: "Median:",
+    plotMeanPrefix: "Mean:",
+    plotIdealLine: "Ideal line y = x",
 
     // Model Performance
     modelPerfTitle: "Linear Regression Model Performance",
@@ -174,18 +210,18 @@ const translations = {
     // Data Explorer
     dataTitle: "Raw Data — Ames Housing",
     dataSubtitle: "Full dataset · 1,460 houses · Click any column to sort",
-    filterNeighborhood: "Neighborhood",
-    allNeighborhoods: "All ({count} neighborhoods)",
+    filterNeighborhood: "Filter by neighborhood",
+    allNeighborhoods: "All neighborhoods ({count})",
     quickSearch: "Quick Search",
-    searchPlaceholder: "Ex: CollgCr, Veenker…",
-    rowsDisplayed: "row(s) displayed",
+    searchPlaceholder: "Ex: CollgCr, Veenker, Edwards…",
+    rowsDisplayed: "house(s) displayed",
     outOfTotal: "out of {total} total",
     resetFilters: "Reset filters",
     loadingData: "Loading 1,460 houses…",
-    noDataFound: "No rows match filters.",
+    noDataFound: "No properties match the selected filters.",
     colId: "#",
     colQuartier: "Neighborhood",
-    colPrice: "Price ($)",
+    colPrice: "Actual Price ($)",
     colArea: "Area (sq ft)",
     colQuality: "Quality",
     colGarage: "Garage",
@@ -201,6 +237,8 @@ const translations = {
     // Header
     appTitle: "Ev Fiyat Tahmini",
     appSubtitle: "Makine Öğrenimi modeli ile ev fiyatını tahmin edin ve gerçek verileri keşfedin.",
+    languageModalTitle: "Dil Seçimi",
+    languageModalSubtitle: "Kullanmak istediğiniz dili seçin",
 
     // Tabs
     tabPredict: "Fiyat Tahmini",
@@ -219,16 +257,32 @@ const translations = {
     calculating: "Hesaplanıyor...",
     estimatedPrice: "Tahmini Fiyat",
     marketPosition: "Piyasa Konumu",
-    ofHouses: "evden daha pahalı",
-    vsMedian: "medyana göre ($163,000)",
-    disclaimer: "Deneysel tahmin, resmi bir gayrimenkul ekspertizi değildir.",
+    higherThan: "Piyasadaki evlerin",
+    ofHouses: "'inden daha yüksek",
+    vsMedianLabel: "medyan fiyata göre ($163.000)",
+    disclaimer: "1.460 gerçek mülk verisine dayalı deneysel tahmin, resmi bir gayrimenkul ekspertizi değildir.",
 
-    // Charts
+    // Charts Tab
     loadingCharts: "Plotly grafikleri yükleniyor...",
     chartDistTitle: "Satış Fiyatı Dağılımı (SalePrice)",
     chartAreaTitle: "Yaşam Alanı (GrLivArea) ve Gerçek Satış Fiyatı",
     chartNeighTitle: "Mahallelere Göre Gerçek Fiyat Dağılımı",
     chartCorrTitle: "SalePrice ile Önemli Değişkenlerin Korelasyon Matrisi",
+
+    // Plotly Axis / Traces / Labels inside charts
+    plotSalePrice: "Satış Fiyatı ($)",
+    plotHouseCount: "Ev Sayısı",
+    plotLivingArea: "Yaşam Alanı (sq ft)",
+    plotQuality: "Kalite (1-10)",
+    plotBasement: "Bodrum (sq ft)",
+    plotNeighborhood: "Mahalle",
+    plotActualPrice: "Gerçek Fiyat ($)",
+    plotPredictedPrice: "Tahmin Edilen Fiyat ($)",
+    plotError: "Hata ($)",
+    plotAbsoluteError: "Mutlak Hata ($)",
+    plotMedianPrefix: "Medyan:",
+    plotMeanPrefix: "Ortalama:",
+    plotIdealLine: "İdeal doğru y = x",
 
     // Model Performance
     modelPerfTitle: "Lineer Regresyon Model Performansı",
@@ -272,18 +326,18 @@ const translations = {
     // Data Explorer
     dataTitle: "Ham Veriler — Ames Housing",
     dataSubtitle: "Tam veri seti · 1.460 ev · Sıralamak için sütun başlığına tıklayın",
-    filterNeighborhood: "Mahalle",
-    allNeighborhoods: "Tümü ({count} mahalle)",
+    filterNeighborhood: "Mahalleye göre filtrele",
+    allNeighborhoods: "Tüm mahalleler ({count})",
     quickSearch: "Hızlı Arama",
-    searchPlaceholder: "Örn: CollgCr, Veenker…",
-    rowsDisplayed: "satır gösteriliyor",
+    searchPlaceholder: "Örn: CollgCr, Veenker, Edwards…",
+    rowsDisplayed: "ev gösteriliyor",
     outOfTotal: "toplam {total} içinden",
     resetFilters: "Filtreleri sıfırla",
     loadingData: "1.460 ev yükleniyor…",
-    noDataFound: "Filtreye uygun kayıt bulunamadı.",
+    noDataFound: "Seçilen filtrelere uygun ev bulunamadı.",
     colId: "#",
     colQuartier: "Mahalle",
-    colPrice: "Fiyat ($)",
+    colPrice: "Gerçek Fiyat ($)",
     colArea: "Alan (sq ft)",
     colQuality: "Kalite",
     colGarage: "Garaj",
@@ -297,6 +351,12 @@ const translations = {
 };
 
 const LanguageContext = createContext();
+
+export const AVAILABLE_LANGUAGES = [
+  { code: 'fr', label: 'Français', flag: '🇫🇷', sub: 'Français (France)' },
+  { code: 'en', label: 'English', flag: '🇬🇧', sub: 'English (International)' },
+  { code: 'tr', label: 'Türkçe', flag: '🇹🇷', sub: 'Türkçe (Türkiye)' },
+];
 
 export function LanguageProvider({ children }) {
   const [language, setLanguage] = useState(() => {
@@ -317,7 +377,7 @@ export function LanguageProvider({ children }) {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t, languages: AVAILABLE_LANGUAGES }}>
       {children}
     </LanguageContext.Provider>
   );

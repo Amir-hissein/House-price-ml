@@ -86,7 +86,7 @@ function CoefficientRow({ rank, feature, coef, positive }) {
    Composant principal
 ─────────────────────────────────────────────── */
 export default function ModelTab() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [metrics, setMetrics] = useState(null);
   const [perfFig, setPerfFig] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -213,7 +213,7 @@ export default function ModelTab() {
             </tbody>
           </table>
           <div style={{ padding: '10px 16px', background: '#f8fafc', borderTop: '1px solid #f0f2f6', fontSize: '0.75rem', color: '#9ca3af' }}>
-            {t('interceptConst')} <strong>–$77 660</strong>
+            {t('interceptConst')} <strong>{language === 'en' ? '–$77,660' : (language === 'tr' ? '–77.660 $' : '–77 660 $')}</strong>
           </div>
         </div>
 
@@ -240,7 +240,7 @@ export default function ModelTab() {
                 color: '#262730',
                 whiteSpace: 'pre'
               }}>
-{`${t('equationPrice')}  =  -77 660 $
+{`${t('equationPrice')}  =  ${language === 'en' ? '-$77,660' : (language === 'tr' ? '-77.660 $' : '-77 660 $')}
   + 49.42   × GrLivArea
   + 22 434  × OverallQual
   + 18 529  × GarageCars
