@@ -37,17 +37,8 @@ This project covers the full ML lifecycle — from raw data ingestion to an inte
 
 ---
 
-## Key Features
 
-- **Linear Regression Pipeline** trained on 6 key drivers (`GrLivArea`, `OverallQual`, `GarageCars`, `TotalBsmtSF`, `FullBath`, `BedroomAbvGr`)
-- **FastAPI Backend** — High-performance REST API (`/predict`, `/metrics`, `/data`, `/plotly/*`)
-- **Modern React 18 Dashboard** — Streamlit-inspired minimalist design with full responsive support
-- **🌐 100% Multi-Language (i18n)** — One-click floating language picker supporting **Français 🇫🇷**, **English 🇬🇧**, and **Türkçe 🇹🇷** (including chart axes and annotations)
-- **Interactive Plotly Visualizations** — Zoom, hover tooltips, distributions, box plots, and heatmaps
-- **Automated Test Suite** — 26 pytest tests covering API endpoints, data loading, preprocessing, model training, and visualization
-- **One-Command CLI Runner** — `run.sh` script to launch, train, test, and audit with zero hassle
 
----
 
 ## Project Structure
 
